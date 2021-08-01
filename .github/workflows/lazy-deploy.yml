@@ -1,0 +1,52 @@
+on:
+  push:
+    branches:
+      - deploy
+name: Publish Website
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@3.1.0
+      with:
+        ftp-server: ftp.lazycoders.com/railify.lazycoders.com/
+        ftp-username: ${{ secrets.ftp_username }}
+        ftp-password: ${{ secrets.ftp_password }}
+        git-ftp-args: --insecure
+        exclude: 
+          .git*
+          - .git*/**
+          -  **/.git*/**
+          - node_modules/**
+          - node_modules/**/*
+          - .env
+          - .babelrc
+          - .browserslistrc
+          - index.php
+          - /.bundle
+
+          - /db/*.sqlite3
+          - /db/*.sqlite3-*
+
+          - /log/*
+          - /tmp/*
+          - !/log/.keep
+          - !/tmp/.keep
+
+          - /tmp/pids/*
+          - !/tmp/pids/
+          - !/tmp/pids/.keep
+
+          - /storage/*
+          - !/storage/.keep
+
+          - /public/assets
+          - .byebug_history
+
+          - /config/master.key
+
