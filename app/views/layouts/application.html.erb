@@ -12,7 +12,12 @@
   </head>
 
   <body>
-    <h1>This is a test code for a title</h1>
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
